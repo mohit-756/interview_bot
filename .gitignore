@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+database.db
+uploads/
+ngrok.exe
+.env
