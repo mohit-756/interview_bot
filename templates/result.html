@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card shadow p-4 w-100" style="max-width: 500px;">
+            <h3 class="text-center mb-3">Result</h3>
+
+            {% if result.decision == "Shortlisted" %}
+            <div class="alert alert-success text-center">
+                <b>Shortlisted</b>
+            </div>
+            <a href="/calendar/{{ email }}" class="btn btn-success w-100">
+                Select Interview Date
+            </a>
+            {% else %}
+            <div class="alert alert-danger text-center">
+                <b>Rejected</b><br>{{ result.weakness }}
+            </div>
+            {% endif %}
+
+            <hr>
+
+            <h5 class="text-center mt-3">Resume Analysis</h5>
+
+            <ul class="list-group mb-3">
+                {% for domain, score in result.domain_scores.items() %}
+                <li class="list-group-item">
+                    
+                    <!-- Score Row -->
+                    <div class="d-flex justify-content-between">
+                        <span>{{ domain.replace('_',' ').title() }}</span>
+                        <span><b>{{ score }}%</b></span>
+                    </div>
+
+                    <!-- Matched Skills (if available) -->
+                    {% if result.matched_details and result.matched_details.get(domain) %}
+                    <small class="text-muted">
+                        Matched: {{ result.matched_details[domain] | join(', ') }}
+                    </small>
+                    {% endif %}
+
+                </li>
+                {% endfor %}
+            </ul>
+
+            <div class="text-center">
+                <p><b>Final Score:</b> {{ result.final_score }}%</p>
+                <p><b>Candidate Type:</b> {{ result.candidate_type }}</p>
+
+                {% if result.strength %}
+                <p class="text-success">
+                    <b>Strength:</b> {{ result.strength.replace('_',' ').title() }}
+                </p>
+                {% endif %}
+
+                {% if result.weakness %}
+                <p class="text-danger">
+                    <b>Weakness:</b> {{ result.weakness }}
+                </p>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

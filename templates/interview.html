@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interview</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow p-4 w-100" style="max-width: 600px;">
+        <h3 class="text-center mb-3">Interview Started</h3>
+
+        <p><b>Candidate:</b> {{ name }}</p>
+        <p><b>Resume:</b> {{ resume }}</p>
+
+        <div class="alert alert-info text-center">
+            Resume auto-linked successfully
+        </div>
+    </div>
+</div>
+<button onclick="startInterview()">Start Interview</button>
+
+<script>
+async function startInterview() {
+    try {
+
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true
+        });
+
+        alert("Camera and Microphone Access Granted");
+
+        // Send signal to backend to start monitoring
+        fetch("/start_monitoring", {
+            method: "POST"
+        });
+
+    } catch (err) {
+        alert("Camera & Mic permission required to start interview.");
+    }
+}
+</script>
+<script>
+
+const recognition = new webkitSpeechRecognition();
+recognition.continuous = true;
+recognition.interimResults = true;
+
+recognition.onresult = function(event) {
+
+    let transcript = "";
+
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+    }
+
+    console.log("Candidate said:", transcript);
+
+    fetch("/save_answer", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            candidate: "{{ name }}",
+            answer: transcript
+        })
+    });
+};
+
+recognition.start();
+
+</script>
+<script>
+setInterval(() => {
+
+    fetch("/log_behavior", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            candidate: "{{ name }}",
+            event: "Eye movement suspicious",
+            confidence: Math.random().toFixed(2)
+        })
+    });
+
+}, 15000); // every 15 seconds
+
+</script>
+</body>
+</html>
