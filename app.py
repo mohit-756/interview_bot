@@ -1,5 +1,4 @@
 import os
-
 from flask import Flask, jsonify, redirect, session
 
 from database import get_db, init_db
@@ -7,10 +6,11 @@ from routes.candidate_routes import bp_candidate
 from routes.hr_routes import bp_hr
 from routes.interview_routes import bp_interview
 
-BASE_URL = "http://127.0.0.1:5000"
+# Read from Azure Environment Variables (safe defaults for local)
+BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:5000")
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"
+app.secret_key = os.getenv("SECRET_KEY", "supersecretkey")
 app.config["BASE_URL"] = BASE_URL
 
 UPLOAD_FOLDER = "uploads"
@@ -56,4 +56,5 @@ def debug_routes():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # local only
+    app.run(host="0.0.0.0", port=5000, debug=True)

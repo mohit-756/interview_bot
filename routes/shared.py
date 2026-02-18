@@ -1,10 +1,8 @@
 import json
 from functools import wraps
-
 import PyPDF2
 import docx
 from flask import current_app, redirect, session
-
 from database import get_db
 from mailer import send_mail
 

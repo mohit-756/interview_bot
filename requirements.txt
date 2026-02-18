@@ -4,3 +4,4 @@ scikit-learn
 python-dotenv
 groq
 python-dotenv
+gunicorn
