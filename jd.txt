@@ -1,0 +1,13 @@
+# jd_config.py
+
+JD_TEXT = """
+Quadrant Technologies is seeking a Software Engineer with strong programming skills in Python and Java.
+
+Experience in AI/ML, Cloud platforms is preferred.
+
+Candidates with NLP, Docker or SAP experience will have an advantage.
+
+Strong problem-solving ability and project experience required.
+
+Minimum academic score 60%.
+"""

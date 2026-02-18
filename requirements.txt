@@ -1,0 +1,6 @@
+flask
+spacy
+scikit-learn
+python-dotenv
+groq
+python-dotenv

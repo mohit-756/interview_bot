@@ -1,0 +1,59 @@
+{% macro render_scores_table(domain_scores) -%}
+<div class="table-responsive">
+  <table class="table table-striped table-bordered align-middle mb-0">
+    <thead class="table-light">
+      <tr>
+        <th>Score Type</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if domain_scores %}
+        {% for score_type, score in domain_scores.items() %}
+          <tr>
+            <td>{{ score_type.replace('_', ' ').title() }}</td>
+            <td>{{ score }}{% if score is number %}%{% endif %}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="2" class="text-center text-muted">No score data available.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+{%- endmacro %}
+
+{% macro render_keywords_table(matched_details) -%}
+<div class="table-responsive">
+  <table class="table table-striped table-bordered align-middle mb-0">
+    <thead class="table-light">
+      <tr>
+        <th>Category</th>
+        <th>Matched Keywords</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if matched_details %}
+        {% for category, keywords in matched_details.items() %}
+          <tr>
+            <td>{{ category.replace('_', ' ').title() }}</td>
+            <td>
+              {% if keywords %}
+                {{ keywords|join(', ') }}
+              {% else %}
+                —
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="2" class="text-center text-muted">No keyword matches available.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+{%- endmacro %}

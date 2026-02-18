@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Interview Completed</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow p-4 w-100" style="max-width: 720px;">
+      <h3 class="text-success mb-3">Interview Completed</h3>
+      <p class="mb-3">Thank you, {{ name }}. Your responses have been saved.</p>
+
+      <h5 class="mb-2">Summary</h5>
+      <ul class="mb-0">
+        <li>Total Questions: {{ summary.get("total_questions", 0) }}</li>
+        <li>Answered Count: {{ summary.get("answered_count", 0) }}</li>
+        <li>Average Answer Length: {{ summary.get("avg_answer_length", 0) }}</li>
+        <li>Total Time (seconds): {{ summary.get("total_time_seconds", 0) }}</li>
+        <li>Tab Switch Count: {{ summary.get("tab_switch_count", 0) }}</li>
+        <li>Camera Granted: {{ summary.get("camera_granted", false) }}</li>
+        <li>Mic Granted: {{ summary.get("mic_granted", false) }}</li>
+        <li>Communication Score (0-10): {{ summary.get("communication_score", 0) }}</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
