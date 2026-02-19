@@ -1,7 +1,5 @@
 flask
-spacy
-scikit-learn
-python-dotenv
-groq
-python-dotenv
 gunicorn
+PyPDF2
+python-docx
+requests
